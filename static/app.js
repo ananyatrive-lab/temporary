@@ -812,61 +812,12 @@ function skipTour() {
     });
 }
 
-// Practice Arena Quiz Submissions
-function submitPracticeGuess(caseId, guess) {
-    const optionsDiv = document.getElementById(`options-c${caseId}`);
-    const explainDiv = document.getElementById(`explain-c${caseId}`);
-    
-    optionsDiv.classList.add('hidden');
-    explainDiv.classList.remove('hidden');
-    
-    let isCorrect = false;
-    let title = "";
-    let content = "";
-    let correctAns = "";
-    
-    if (caseId === 1) {
-        correctAns = "Decline (Pass)";
-        if (guess === 'Pass') isCorrect = true;
-        title = isCorrect ? "CORRECT DECISION!" : "WRONG DECISION.";
-        content = "Although 180% YoY Growth is remarkable, a 9.5% Monthly Churn implies losing ~70% of customer accounts every year. The LTV/CAC ratio is 1.2x, meaning marketing expenses are barely recovered. High growth built on high churn represents a 'leaky bucket' business that destroys capital. Correct move is to Decline (Pass).";
-    } else if (caseId === 2) {
-        correctAns = "Invest (Buy)";
-        if (guess === 'Buy') isCorrect = true;
-        title = isCorrect ? "CORRECT DECISION!" : "WRONG DECISION.";
-        content = "DeepTech operations (like fusion energy or quantum devices) have zero revenue in early stages due to heavy engineering R&D. However, a 24-month runway is excellent. With a $85B massive TAM and a 9.5/10 founder index, this represents high conviction. Asymmetric return profiles justify investing. Correct move is to Invest (Buy).";
-    } else if (caseId === 3) {
-        correctAns = "Invest (Buy)";
-        if (guess === 'Buy') isCorrect = true;
-        title = isCorrect ? "CORRECT DECISION!" : "WRONG DECISION.";
-        content = "While 35% YoY growth is moderate, the unit economics are elite. A 4.8x LTV/CAC represents exceptional marketing efficiency. The churn of 0.5% translates to stable customer retention. The company compiles assets capital-efficiently, showing high return probability. Correct move is to Invest (Buy).";
-    } else if (caseId === 4) {
-        correctAns = "Invest (Buy)";
-        if (guess === 'Buy') isCorrect = true;
-        title = isCorrect ? "CORRECT DECISION!" : "WRONG DECISION.";
-        content = "At Series B, a startup must prove it can expand market share efficiently. A 3.5x LTV/CAC is a solid indicator of unit economic stability. Churn is low at 1.2% monthly, and YoY growth is high (75%) for a later stage business. The 15-month runway is healthy for a scaleup targeting cash break-even. Correct move is to Invest (Buy).";
-    } else if (caseId === 5) {
-        correctAns = "Decline (Pass)";
-        if (guess === 'Pass') isCorrect = true;
-        title = isCorrect ? "CORRECT DECISION!" : "WRONG DECISION.";
-        content = "Slow YoY growth (8%) for a seed-stage startup is an extreme warning sign. Added to inefficient unit economics (LTV/CAC = 1.5x, Churn = 5.5%) and dangerously low capital runway (6 months), this company is highly likely to default. Correct move is to Decline (Pass).";
-    } else if (caseId === 6) {
-        correctAns = "Invest (Buy)";
-        if (guess === 'Buy') isCorrect = true;
-        title = isCorrect ? "CORRECT DECISION!" : "WRONG DECISION.";
-        content = "CleanTech grid infrastructure represents a large TAM sector ($28B). A YoY Growth of 95% is robust for Series A, unit economics are highly profitable (LTV/CAC = 4.2x, Churn = 1.0%), and the cash runway is exceptional (30 months). This company has very low risk of failure. Correct move is to Invest (Buy).";
+function resetGameSession() {
+    if (confirm("Are you sure you want to start a new session? This will reset all your scores, streaks, bookmarks, wishlists, and portfolios to zero.")) {
+        localStorage.clear();
+        window.location.reload();
     }
-    
-    explainDiv.className = `practice-explanation ${isCorrect ? 'correct' : 'incorrect'}`;
-    explainDiv.innerHTML = `
-        <h5 style="font-size: 14px; font-weight: 800; text-transform: uppercase;">
-            <i class="fa-solid ${isCorrect ? 'fa-circle-check text-success' : 'fa-circle-xmark text-danger'}"></i> ${title}
-        </h5>
-        <div style="margin: 8px 0; padding: 6px 10px; border-radius: 4px; font-weight: 700; font-size: 11px; background: rgba(255,255,255,0.05); display: inline-block;">
-            Correct Answer: <span style="color: ${isCorrect ? 'var(--success)' : 'var(--danger)'};">${correctAns}</span>
-        </div>
-        <p style="margin-top: 6px;">${content}</p>
-    `;
+}
 
 // Dynamic Vetting Case study loader
 function loadRandomPracticeCase() {
@@ -900,15 +851,22 @@ function loadRandomPracticeCase() {
             </div>
         </div>
         
-        <div id="simulator-quiz-options" style="display:flex; gap:12px;">
-            <button class="action-btn" onclick="submitSimulatorGuess('Buy')" style="flex:1; padding:10px 0;"><i class="fa-solid fa-thumbs-up"></i> Invest (Buy)</button>
-            <button class="action-btn secondary" onclick="submitSimulatorGuess('Pass')" style="flex:1; padding:10px 0;"><i class="fa-solid fa-ban"></i> Decline (Pass)</button>
+        <div id="simulator-quiz-options" style="display:flex; gap:10px;">
+            <button class="action-btn" onclick="submitSimulatorGuess('Success')" style="flex:1.2; padding:10px 0; background: linear-gradient(135deg, #10b981, #059669); font-size: 11px; display:flex; align-items:center; justify-content:center; gap:6px; border:none; color:white; border-radius:6px; font-weight:700; cursor:pointer;"><i class="fa-solid fa-circle-check"></i> Predict SUCCESS</button>
+            <button class="action-btn secondary" onclick="submitSimulatorGuess('Failure')" style="flex:1.2; padding:10px 0; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color:#ef4444; font-size: 11px; display:flex; align-items:center; justify-content:center; gap:6px;"><i class="fa-solid fa-circle-xmark"></i> Predict FAILURE</button>
+            <button class="action-btn secondary" onclick="skipPracticeCase()" style="flex:0.8; padding:10px 0; border-color: var(--border-color); color: var(--text-muted); font-size: 11px; display:flex; align-items:center; justify-content:center; gap:6px;"><i class="fa-solid fa-angles-right"></i> Skip Case</button>
         </div>
         
         <div id="simulator-explanation" class="practice-explanation hidden" style="margin-top: 16px; padding: 15px; border-radius: 8px;">
             <!-- Answer feedback gets injected here -->
         </div>
     `;
+}
+
+function skipPracticeCase() {
+    if (!currentPracticeCase) return;
+    logUserAction(`Skipped Simulator Case #${currentPracticeCase.id}`);
+    loadRandomPracticeCase();
 }
 
 function submitSimulatorGuess(guess) {
@@ -920,8 +878,23 @@ function submitSimulatorGuess(guess) {
     if (optionsDiv) optionsDiv.style.display = 'none';
     if (explainDiv) explainDiv.classList.remove('hidden');
     
-    const isCorrect = guess === currentPracticeCase.correctAns;
-    const correctAnsLabel = currentPracticeCase.correctAns === 'Buy' ? 'Invest (Buy)' : 'Decline (Pass)';
+    const mappedGuess = guess === 'Success' ? 'Buy' : 'Pass';
+    const isCorrect = mappedGuess === currentPracticeCase.correctAns;
+    
+    const actualOutcome = currentPracticeCase.correctAns === 'Buy' ? 'SUCCEEDED' : 'FAILED';
+    let percentageLabel = '';
+    
+    if (actualOutcome === 'SUCCEEDED') {
+        let roiVal = 1.0;
+        if (currentPracticeCase.id === 2) roiVal = 8.5;
+        if (currentPracticeCase.id === 3) roiVal = 4.8;
+        if (currentPracticeCase.id === 4) roiVal = 3.5;
+        if (currentPracticeCase.id === 6) roiVal = 4.2;
+        percentageLabel = `ROI Yield: +${Math.round((roiVal - 1.0) * 100)}% (${roiVal}x ROI multiple)`;
+    } else {
+        percentageLabel = "Failure Probability: 100% (Capital Default / Runway Depleted)";
+    }
+    
     const title = isCorrect ? "CORRECT DECISION!" : "WRONG DECISION.";
     
     explainDiv.className = `practice-explanation ${isCorrect ? 'correct' : 'incorrect'}`;
@@ -929,8 +902,9 @@ function submitSimulatorGuess(guess) {
         <h5 style="font-size: 13px; font-weight: 800; text-transform: uppercase; margin:0;">
             <i class="fa-solid ${isCorrect ? 'fa-circle-check text-success' : 'fa-circle-xmark text-danger'}"></i> ${title}
         </h5>
-        <div style="margin: 8px 0; padding: 6px 10px; border-radius: 4px; font-weight: 700; font-size: 11px; background: rgba(255,255,255,0.05); display: inline-block;">
-            Correct Answer: <span style="color: ${isCorrect ? 'var(--success)' : 'var(--danger)'};">${correctAnsLabel}</span>
+        <div style="margin: 8px 0; padding: 6px 10px; border-radius: 4px; font-weight: 700; font-size: 11px; background: rgba(255,255,255,0.05); display: flex; flex-direction:column; gap:4px;">
+            <div>Actual Outcome: <span style="color: ${actualOutcome === 'SUCCEEDED' ? 'var(--success)' : 'var(--danger)'}; font-weight:800;">${actualOutcome}</span></div>
+            <div style="font-size:10px; color: var(--text-muted);">${percentageLabel}</div>
         </div>
         <p style="margin-top: 6px; font-size: 12px; line-height: 1.4; color: var(--text-muted);">${currentPracticeCase.explain}</p>
         <button class="submit-btn" onclick="loadRandomPracticeCase()" style="margin-top: 15px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding:10px 0;">
@@ -958,8 +932,8 @@ function submitSimulatorGuess(guess) {
     localStorage.setItem('bestStreak', bestStreak);
     localStorage.setItem('gameScore', gameScore);
     
-    // Add to user holdings portfolio if they chose to Invest (Buy)
-    if (guess === 'Buy') {
+    // Add to user holdings portfolio if they chose Success and it actually succeeded (correctAns is Buy)
+    if (guess === 'Success' && currentPracticeCase.correctAns === 'Buy') {
         const exists = userPortfolio.some(p => p.id === `CASE-${currentPracticeCase.id}`);
         if (!exists) {
             let roiEst = 1.0;
@@ -982,7 +956,7 @@ function submitSimulatorGuess(guess) {
     updateArenaHUD();
     updateProfileModalData();
     
-    logUserAction(`Guessed ${guess.toUpperCase()} on Case #${currentPracticeCase.id} (${isCorrect ? 'Correct' : 'Incorrect'})`);
+    logUserAction(`Predicted ${guess.toUpperCase()} on Case #${currentPracticeCase.id} (${isCorrect ? 'Correct' : 'Incorrect'})`);
 }
 
 // Venture Capital News Feed generator

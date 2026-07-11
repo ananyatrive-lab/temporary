@@ -87,8 +87,11 @@
                     <h1 id="page-title">Groundwork Dashboard</h1>
                     <p class="header-subtitle">ML-powered startup vetting & growth analytics</p>
                 </div>
-                <div class="header-actions">
-                    <button class="action-btn secondary" id="start-tour-btn" style="margin-right: 12px;">
+                <div class="header-actions" style="display: flex; align-items: center; gap: 8px;">
+                    <button class="action-btn secondary" id="reset-session-btn" onclick="resetGameSession()" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.25); color: #ef4444; font-size: 11px; padding: 10px 14px;">
+                        <i class="fa-solid fa-rotate-left"></i> Reset Session
+                    </button>
+                    <button class="action-btn secondary" id="start-tour-btn" style="padding: 10px 14px; margin: 0;">
                         <i class="fa-solid fa-circle-question"></i> Help / Tour
                     </button>
                     <div class="status-indicator">
@@ -643,145 +646,21 @@
                      </div>
                  </div>
                 
-                <div class="practice-grid">
-                    <!-- Case 1 -->
-                    <div class="practice-card glass" id="practice-c1">
-                        <div class="practice-badge">Case #1: SaaS</div>
-                        <h4>The Leaky SaaS Rocket</h4>
-                        <p class="practice-desc">A pre-seed B2B SaaS startup shows explosive top-line traction but struggles with attrition.</p>
-                        
-                        <div class="practice-stats">
-                            <div class="practice-stat"><span>YoY Growth:</span> <strong>180%</strong></div>
-                            <div class="practice-stat"><span>Monthly Churn:</span> <strong>9.5%</strong></div>
-                            <div class="practice-stat"><span>LTV / CAC:</span> <strong>1.2x</strong></div>
-                            <div class="practice-stat"><span>TAM Size:</span> <strong>$2.5B</strong></div>
-                        </div>
-                        
-                        <div class="practice-quiz-options" id="options-c1">
-                            <button class="action-btn" onclick="submitPracticeGuess(1, 'Buy')"><i class="fa-solid fa-thumbs-up"></i> Invest (Buy)</button>
-                            <button class="action-btn secondary" onclick="submitPracticeGuess(1, 'Pass')"><i class="fa-solid fa-ban"></i> Decline (Pass)</button>
-                        </div>
-                        
-                        <div class="practice-explanation hidden" id="explain-c1">
-                            <!-- Filled dynamically -->
-                        </div>
+                <div class="overview-grid" style="margin-top: 20px;">
+                    <!-- Left Side: Simulator Card (8 columns) -->
+                    <div class="dashboard-card glass" style="grid-column: span 8; padding: 24px; min-height: 440px; display: flex; flex-direction: column; justify-content: center;" id="simulator-container">
+                        <!-- Dynamic Case Study Card Injected Here by JS -->
                     </div>
-
-                    <!-- Case 2 -->
-                    <div class="practice-card glass" id="practice-c2">
-                        <div class="practice-badge">Case #2: DeepTech</div>
-                        <h4>Nuclear R&D Horizon</h4>
-                        <p class="practice-desc">A deeptech enterprise developing clean fusion reactors has high costs and no immediate sales, but vast market scale.</p>
+                    
+                    <!-- Right Side: Venture News Feed & Live Market Watch (4 columns) -->
+                    <div class="dashboard-card glass" style="grid-column: span 4; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+                        <h3 class="card-title" style="margin: 0; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-newspaper" style="color: var(--accent);"></i> Venture Intelligence
+                        </h3>
+                        <p style="font-size: 11px; color: var(--text-muted); margin: 0;">Live signals from early-stage venture capital markets & macro growth indexes.</p>
                         
-                        <div class="practice-stats">
-                            <div class="practice-stat"><span>YoY Growth:</span> <strong>N/A (R&D)</strong></div>
-                            <div class="practice-stat"><span>Monthly Burn:</span> <strong>$120,000</strong></div>
-                            <div class="practice-stat"><span>Runway:</span> <strong>24.0 mos</strong></div>
-                            <div class="practice-stat"><span>TAM Size:</span> <strong>$85.0B</strong></div>
-                        </div>
-                        
-                        <div class="practice-quiz-options" id="options-c2">
-                            <button class="action-btn" onclick="submitPracticeGuess(2, 'Buy')"><i class="fa-solid fa-thumbs-up"></i> Invest (Buy)</button>
-                            <button class="action-btn secondary" onclick="submitPracticeGuess(2, 'Pass')"><i class="fa-solid fa-ban"></i> Decline (Pass)</button>
-                        </div>
-                        
-                        <div class="practice-explanation hidden" id="explain-c2">
-                            <!-- Filled dynamically -->
-                        </div>
-                    </div>
-
-                    <!-- Case 3 -->
-                    <div class="practice-card glass" id="practice-c3">
-                        <div class="practice-badge">Case #3: FinTech</div>
-                        <h4>The Capital-Efficient Hub</h4>
-                        <p class="practice-desc">A niche payment processing SaaS targets regional banks. Growth is steady but capital efficiency is remarkable.</p>
-                        
-                        <div class="practice-stats">
-                            <div class="practice-stat"><span>YoY Growth:</span> <strong>35%</strong></div>
-                            <div class="practice-stat"><span>Monthly Churn:</span> <strong>0.5%</strong></div>
-                            <div class="practice-stat"><span>LTV / CAC:</span> <strong>4.8x</strong></div>
-                            <div class="practice-stat"><span>TAM Size:</span> <strong>$4.2B</strong></div>
-                        </div>
-                        
-                        <div class="practice-quiz-options" id="options-c3">
-                            <button class="action-btn" onclick="submitPracticeGuess(3, 'Buy')"><i class="fa-solid fa-thumbs-up"></i> Invest (Buy)</button>
-                            <button class="action-btn secondary" onclick="submitPracticeGuess(3, 'Pass')"><i class="fa-solid fa-ban"></i> Decline (Pass)</button>
-                        </div>
-                        
-                        <div class="practice-explanation hidden" id="explain-c3">
-                            <!-- Filled dynamically -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ADDED: 3 MORE CASES (CASES 4, 5, 6) -->
-                <div class="practice-grid" style="margin-top: 24px;">
-                    <!-- Case 4 -->
-                    <div class="practice-card glass" id="practice-c4">
-                        <div class="practice-badge">Case #4: FinTech</div>
-                        <h4>The Series B Scaleup</h4>
-                        <p class="practice-desc">A growth-stage payment API startup displays established market presence but requires cash stabilization.</p>
-                        
-                        <div class="practice-stats">
-                            <div class="practice-stat"><span>YoY Growth:</span> <strong>75%</strong></div>
-                            <div class="practice-stat"><span>Monthly Churn:</span> <strong>1.2%</strong></div>
-                            <div class="practice-stat"><span>LTV / CAC:</span> <strong>3.5x</strong></div>
-                            <div class="practice-stat"><span>Runway:</span> <strong>15.0 mos</strong></div>
-                        </div>
-                        
-                        <div class="practice-quiz-options" id="options-c4">
-                            <button class="action-btn" onclick="submitPracticeGuess(4, 'Buy')"><i class="fa-solid fa-thumbs-up"></i> Invest (Buy)</button>
-                            <button class="action-btn secondary" onclick="submitPracticeGuess(4, 'Pass')"><i class="fa-solid fa-ban"></i> Decline (Pass)</button>
-                        </div>
-                        
-                        <div class="practice-explanation hidden" id="explain-c4">
-                            <!-- Filled dynamically -->
-                        </div>
-                    </div>
-
-                    <!-- Case 5 -->
-                    <div class="practice-card glass" id="practice-c5">
-                        <div class="practice-badge">Case #5: EdTech</div>
-                        <h4>The EdTech Plateau</h4>
-                        <p class="practice-desc">A seed-stage local learning management system exhibits slow customer acquisition with high market friction.</p>
-                        
-                        <div class="practice-stats">
-                            <div class="practice-stat"><span>YoY Growth:</span> <strong>8%</strong></div>
-                            <div class="practice-stat"><span>Monthly Churn:</span> <strong>5.5%</strong></div>
-                            <div class="practice-stat"><span>LTV / CAC:</span> <strong>1.5x</strong></div>
-                            <div class="practice-stat"><span>Runway:</span> <strong>6.0 mos</strong></div>
-                        </div>
-                        
-                        <div class="practice-quiz-options" id="options-c5">
-                            <button class="action-btn" onclick="submitPracticeGuess(5, 'Buy')"><i class="fa-solid fa-thumbs-up"></i> Invest (Buy)</button>
-                            <button class="action-btn secondary" onclick="submitPracticeGuess(5, 'Pass')"><i class="fa-solid fa-ban"></i> Decline (Pass)</button>
-                        </div>
-                        
-                        <div class="practice-explanation hidden" id="explain-c5">
-                            <!-- Filled dynamically -->
-                        </div>
-                    </div>
-
-                    <!-- Case 6 -->
-                    <div class="practice-card glass" id="practice-c6">
-                        <div class="practice-badge">Case #6: CleanTech</div>
-                        <h4>Solar Infrastructure Grid</h4>
-                        <p class="practice-desc">A Series A CleanTech business building advanced grid systems has long cash runway and highly efficient retention.</p>
-                        
-                        <div class="practice-stats">
-                            <div class="practice-stat"><span>YoY Growth:</span> <strong>95%</strong></div>
-                            <div class="practice-stat"><span>Monthly Churn:</span> <strong>1.0%</strong></div>
-                            <div class="practice-stat"><span>LTV / CAC:</span> <strong>4.2x</strong></div>
-                            <div class="practice-stat"><span>Runway:</span> <strong>30.0 mos</strong></div>
-                        </div>
-                        
-                        <div class="practice-quiz-options" id="options-c6">
-                            <button class="action-btn" onclick="submitPracticeGuess(6, 'Buy')"><i class="fa-solid fa-thumbs-up"></i> Invest (Buy)</button>
-                            <button class="action-btn secondary" onclick="submitPracticeGuess(6, 'Pass')"><i class="fa-solid fa-ban"></i> Decline (Pass)</button>
-                        </div>
-                        
-                        <div class="practice-explanation hidden" id="explain-c6">
-                            <!-- Filled dynamically -->
+                        <div style="display: flex; flex-direction: column; gap: 12px; max-height: 420px; overflow-y: auto; padding-right: 4px;" id="news-feed-container">
+                            <!-- News items rendered dynamically by JS -->
                         </div>
                     </div>
                 </div>
@@ -1269,6 +1148,16 @@
                             <div style="font-size: 12px; color: var(--text-muted); font-style: italic;">No recent actions recorded.</div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Profile Modal Action Footer Controls -->
+                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <button onclick="resetGameSession()" class="action-btn secondary" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.25); color: #ef4444; font-size: 11px; padding: 10px 16px; display: flex; align-items: center; gap: 6px; margin: 0;">
+                        <i class="fa-solid fa-rotate-left"></i> Reset All Data
+                    </button>
+                    <button onclick="closeProfileModal()" class="submit-btn" style="background: var(--text-muted); font-size: 11px; padding: 10px 18px; display: flex; align-items: center; gap: 6px; margin: 0;">
+                        <i class="fa-solid fa-xmark"></i> Close Profile
+                    </button>
                 </div>
             </div>
         </div>
